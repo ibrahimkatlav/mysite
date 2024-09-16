@@ -2,7 +2,7 @@
 import { c as createComponent, r as renderTemplate, a as renderComponent, m as maybeRenderHead } from '../chunks/astro/server_C89fityf.mjs';
 import 'kleur/colors';
 import { $ as $$PageHeading } from '../chunks/page-heading_DVvB6vXW.mjs';
-import { $ as $$PostsLoop } from '../chunks/posts-loop__Tg8Ce0l.mjs';
+import { $ as $$PostsLoop } from '../chunks/posts-loop_CFpV2uwT.mjs';
 import { $ as $$Main } from '../chunks/main_nji-187x.mjs';
 export { renderers } from '../renderers.mjs';
 

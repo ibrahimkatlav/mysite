@@ -3,7 +3,7 @@ import { b as createAstro, c as createComponent, r as renderTemplate, m as maybe
 import 'kleur/colors';
 import 'clsx';
 import { p as projects, $ as $$Project } from '../chunks/project_CUSSKoP0.mjs';
-import { $ as $$PostsLoop } from '../chunks/posts-loop__Tg8Ce0l.mjs';
+import { $ as $$PostsLoop } from '../chunks/posts-loop_CFpV2uwT.mjs';
 import { $ as $$Main } from '../chunks/main_nji-187x.mjs';
 export { renderers } from '../renderers.mjs';
 
