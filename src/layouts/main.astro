@@ -1,0 +1,173 @@
+---
+import Footer from "../components/footer.astro";
+import Header from "../components/header.astro";
+import SquareLines from "../components/square-lines.astro";
+import config from "../config/config.json";
+import { plainify } from "../lib/utils/textConverter";
+// types for frontmatters
+export interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  canonical?: string;
+}
+
+// distructure frontmatters
+const { title, description, image, noindex, canonical } =
+  Astro.props;
+
+
+
+const pageUrl = new URL(Astro.url.pathname, Astro.site);
+
+  const img = "https://ibrahimkatlav.com" + image ;
+
+const schema = {
+    "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "İbrahim Katlav",
+  "url": "https://ibraihmkatlav.com",
+  "logo": "https://ibrahimkatlav.com/images/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+905312852677",
+    "contactType": "Customer Service"
+  },
+  "sameAs": [
+    "https://www.facebook.com/ibrahimkatlav/",
+    "https://www.instagram.com/ibrahimkatlav/"
+  ]
+};
+
+const schema2 = {
+  
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "İbrahim Katlav",
+  "url": "https://ibrahimkatlav.com"
+  };
+
+
+
+const schema3 = {
+    "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": title,
+  "url": pageUrl,
+  "isPartOf": {
+    "@type": "WebSite",
+    "@id": "https://ibrahimkatlav.com"
+  },
+  ...(image && {
+    "primaryImageOfPage": {
+      "@type": "ImageObject",
+      "url": img
+    }
+  }),
+  "author": {
+    "@type": "Person",
+    "name": "İbrahim Katlav",
+    "url": "https://ibrahimkatlav.com"
+  }
+};
+
+
+
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5"/>
+    <meta name="generator" content="İbrahim Katlav" />
+    <!-- Custom Font kullanırsak yorum satırından kaldıralım 
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    -->
+
+
+    <!-- SEO Uzmanı <3 İbrahim Katlav -->
+
+    <title>{title}</title>
+    <meta name="description" content={description}/>
+    {noindex ? <meta name="robots" content="noindex, follow" />:<meta name="robots" content="index, follow" />}
+    <link rel="sitemap" href="https://ibrahimkatlav.com/sitemap-index.xml" />
+    <meta name="author" content="İbrahim Katlav" />
+    {Astro.url.pathname.includes('/blog/page/') ? (
+    <link rel="canonical" href="https://ibrahimkatlav.com/blog/" item-prop="url" />
+    ) : (
+    <>
+    {canonical && <link rel="canonical" href={canonical} item-prop="url" />}
+    {!canonical && <link rel="canonical" href={`${config.site.base_url}/${Astro.url.pathname.replace("/", "")}`} item-prop="url" />}
+    </>
+)}
+    {Astro.url.pathname.includes('/blog/page/') ? (
+    <meta name="x-canonical-url" content="https://ibrahimkatlav.com/blog/"/>
+    ) : (
+    <>
+    {canonical && <meta name="x-canonical-url" content={canonical}/>}
+    {!canonical && <meta name="x-canonical-url" content={`${config.site.base_url}/${Astro.url.pathname.replace("/", "")}`}/>}
+    </>
+)}
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={plainify(title ? title : config.site.title,)}/>
+    <meta property="og:description" content={plainify(description ? description : config.metadata.meta_description,)}/>
+    <meta property="og:url" content={`${config.site.base_url}/${Astro.url.pathname.replace("/", "")}`}/>
+    <meta property="og:site_name" content="İbrahim Katlav" />
+    <meta property="og:updated_time" content="2024-07-26T10:04:38+00:00" />
+    <meta property="og:image" content={`${config.site.base_url}${image ? image : config.metadata.meta_image}`}/>
+    <meta property="og:image:secure_url" content={`${config.site.base_url}${image ? image : config.metadata.meta_image}`}/>
+    <meta property="og:image:width" content="1600"/>
+    <meta property="og:image:height" content="1080"/>
+    <meta property="og:image:alt" content="İbrahim Katlav" />
+    <meta property="og:image:type" content="image/jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={plainify(title ? title : config.site.title,)}/>
+    <meta name="twitter:description" content={plainify(description ? description : config.metadata.meta_description,)}/>
+    <meta name="twitter:site" content="@willbecoming" />
+    <meta name="twitter:creator" content="@willbecoming" />
+    <meta name="twitter:image" content={`${config.site.base_url}${image ? image : config.metadata.meta_image}`}/>
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema2)} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema3)} />
+    <slot name="blogjson" />
+
+
+
+    
+
+    
+
+    
+    <script is:inline>
+      if (typeof Storage !== 'undefined') {
+        if (
+          localStorage.getItem('dark_mode') &&
+          localStorage.getItem('dark_mode') == 'true'
+        ) {
+          document.documentElement.classList.add('dark')
+        }
+      }
+    </script>
+
+    <style>
+      .prose img {
+        border-radius: 20px;
+      }
+    </style>
+    <link rel="icon" type="image/x-icon" href="../assets/images/favicon.png" />
+    <script src="../assets/css/main.css"></script>
+    <Fragment set:html={import.meta.env.HEADER_INJECT} />
+  </head>
+  <body class="antialiased bg-white dark:bg-neutral-950">
+    <SquareLines />
+    <Header />
+    <slot />
+    <Footer />
+    <script src="../assets/js/main.js"></script>
+    <Fragment set:html={import.meta.env.FOOTER_INJECT} />
+  </body>
+</html>
