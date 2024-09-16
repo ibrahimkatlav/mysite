@@ -8,6 +8,15 @@ import remarkCollapse from "remark-collapse";
 import remarkToc from "remark-toc";
 import config from "./src/config/config.json";
 import keystatic from '@keystatic/astro';
+import netlify from '@astrojs/netlify';
+
+
+
+
+
+
+
+
 
 
 
@@ -26,7 +35,9 @@ export default defineConfig({
   site: config.site.base_url ? config.site.base_url : "https://ibrahimkatlav.com",
   base: config.site.base_path ? config.site.base_path : "/",
   trailingSlash: "never",
-   output: "hybrid",
+  output: "server",
+
+
   integrations: [react(), sitemap(), keystatic(), mdx(),  tailwind({
     config: {
       applyBaseStyles: false
@@ -34,6 +45,7 @@ export default defineConfig({
   }), AutoImport({
     imports: ["@/shortcodes/Button", "@/shortcodes/Accordion", "@/shortcodes/Notice", "@/shortcodes/Sariarkaplan", "@/shortcodes/Video", "@/shortcodes/Youtube", "@/shortcodes/Tabs", "@/shortcodes/Tab"]
   }), ],
+
   markdown: {
     remarkPlugins: [remarkToc, [remarkCollapse, {
       test: "Table of contents"
@@ -43,5 +55,7 @@ export default defineConfig({
       wrap: true
     },
     extendDefaultPlugins: true
-  }
+  },
+
+  adapter: netlify(),
 });
